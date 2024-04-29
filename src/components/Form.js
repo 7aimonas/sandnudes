@@ -1,85 +1,85 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-const Form = () => {
-  const [submit, setSubmit] = useState(false);
+function Form() {
   const [formData, setFormData] = useState({
-    "entry.2064147977": "",
-    "entry.1867834770": "",
-    "entry.870590958": ""
+    fullName: '',
+    email: '',
+    phoneNumber: ''
   });
 
-  const handleInputData = (input) => (e) => {
-    const { value } = e.target;
-
-    setFormData((prevState) => ({
-      ...prevState,
-      [input]: value
-    }));
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  async function handleSubmit(e) {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    setSubmit(true);
-    let url = `https://docs.google.com/forms/u/0/d/e/1FAIpQLSeztdL16CWx5orMiVtJOxN5NQ3ytGgUiQDO-3ReOdtsMk-ZuQ/formResponse?entry.2064147977=${formData["entry.2064147977"]}&entry.1867834770=${formData["entry.1867834770"]}&entry.870590958=${formData["entry.870590958"]}`;
+    console.log('Form submitted:', formData);
+    const data = new FormData();
+    data.append('fullName', formData.fullName);
+    data.append('email', formData.email);
+    data.append('phoneNumber', formData.phoneNumber);
+   // your URL.
 
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      }
-    });
-  }
+    const Sheet_Url="https://script.google.com/macros/s/AKfycbxkmrTRIfYcSlfS6QDx-SzdW908FrDI6KTpWzKbtCA3NNiEPiRcAer06fNkcdT30tZn/exec"
+    try {
+      await fetch(Sheet_Url, {
+        method: 'POST',
+        body: data,
+        muteHttpExceptions: true,
+      });
+
+      setFormData({
+        fullNameame: '',
+        email: '',
+        phoneNumber: '',
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <div className="contactFormWrapper">
-      <div className="formheader"></div>
-      <div className="formcontact">
-        {submit ? (
-          <div className="afterForm">Thanks, will get back to you soon</div>
-        ) : (
-          <form onSubmit={handleSubmit} target="_self">
-            <fieldset>
-              <label htmlFor="entry.2064147977">Name:</label>
-              <input
-                required
-                type="text"
-                name="entry.2064147977"
-                onChange={handleInputData("entry.2064147977")}
-                value={formData["entry.2064147977"]}
-                autoComplete={false}
-              />
-            </fieldset>
-
-            <fieldset>
-              <label htmlFor="entry.1867834770">E-mail:</label>
-              <input
-                required
-                type="email"
-                name="entry.1867834770"
-                onChange={handleInputData("entry.1867834770")}
-                value={formData["entry.1867834770"]}
-                autoComplete={false}
-              />
-            </fieldset>
-
-            <fieldset>
-              <label htmlFor="entry.870590958">Message:</label>
-              <textarea
-                required
-                name="entry.870590958"
-                rows="4"
-                cols="10"
-                onChange={handleInputData("entry.870590958")}
-                value={formData["entry.870590958"]}
-                autoComplete={false}
-              ></textarea>
-            </fieldset>
-
-            <button type="submit">Submit</button>
-          </form>
-        )}
-      </div>
+    <div className="App">
+      <header className="App-header">
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="fullName">Full Name:</label>
+            <input
+              type="text"
+              id="fullName"
+              name="fullName"
+              value={formData.fullName}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="phoneNumber">Phone Number:</label>
+            <input
+              type="tel"
+              id="phoneNumber"
+              name="phoneNumber"
+              value={formData.phoneNumber}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <button type="submit">Submit</button>
+        </form>
+      </header>
     </div>
   );
-};
+}
 
 export default Form;
