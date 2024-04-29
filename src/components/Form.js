@@ -19,7 +19,7 @@ function Form() {
     data.append('email', formData.email);
     data.append('phoneNumber', formData.phoneNumber);
    // your URL.
-
+                    
     const Sheet_Url="https://script.google.com/macros/s/AKfycbxkmrTRIfYcSlfS6QDx-SzdW908FrDI6KTpWzKbtCA3NNiEPiRcAer06fNkcdT30tZn/exec"
     try {
       await fetch(Sheet_Url, {
