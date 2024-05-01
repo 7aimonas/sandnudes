@@ -5,6 +5,7 @@ function Header() {
         <header className="header">
             <img 
                 src="../img/banner.jpeg" 
+                alt="header banner"
                 className="header--image"
             />
             <h2 className="header--title"></h2> 

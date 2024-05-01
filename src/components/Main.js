@@ -14,7 +14,7 @@ function Main() {
       <ul className="main--menu">
         <h2>Sign-Up 2024</h2>
         <h2>Submit 2024</h2>
-        <h2><a href="https://www.youtube.com/@sandnudes" target="_blank">   
+        <h2><a href="https://www.youtube.com/@sandnudes" target="_blank" rel="noreferrer">   
         Past Submissions</a></h2>
       </ul>
     </div>
